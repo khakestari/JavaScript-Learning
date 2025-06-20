@@ -1,0 +1,32 @@
+High level: manage resources auto
+Garbage-collected: clean unused opjects from computer memory
+interpreted language: 
+Muti-paradigm: Procedural/ Object-oriented/ Functional Programming
+Prototype-based (Object-oriented)
+First-class functions: functions treated as variables. We can pass them into other functions, and return them from functions.
+Dynamic: Dynamically-typed language (no data type definitions, data type of variable automatically change)
+
+Single-threaded:
+Non-blocking event loop:
+
+
+Just-in-time (JIT) compilation: Entire code is converted into machine code at once, then executed immediately.
+there is no portable file and execution happens immediately after compilation.
+
+As JS enters the JS engin -> Parsing (AST Abstract Syntax Tree) -> Compilation (AST -> machine code) -> executed machine code right away (Happens in call stack)
+
+js engine and runtime
+
+execution order right after compilation: 
+1. global execution context (for top level code - not inside a function -)
+2. execution offunctions and waiting for callbacks (eventloop provides new callback functions)
+
+Execution Context:
+1- variable enviroment
+2- scope chain
+3- this keyword
+
+
+scope
+- "let" and "const" are blocked scoped (ES6).
+- "var" is function-scoped.
