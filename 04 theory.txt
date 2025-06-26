@@ -24,9 +24,18 @@ execution order right after compilation:
 Execution Context:
 1- variable enviroment
 2- scope chain
-3- this keyword
+3- "this" keyword
 
 
 scope
 - "let" and "const" are blocked scoped (ES6).
 - "var" is function-scoped.
+
+Hoisting: Makes some types of variables accessible/usable in the code before they actually declared.
+
+behind the scenes: before execution, code is scanned for variable declarations, and for each variable, a new property is created in the variable environment object.
+
+
+always use regualr function as a method for objects.
+
+Memory management 
