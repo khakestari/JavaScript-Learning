@@ -35,6 +35,9 @@ const restaurant = {
   orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time = '20:10', address }) {
     console.log(`Order recieved! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
   },
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`here is delicious pasta with ${ing1}, ${ing2} and ${ing3}`);
+  },
   openingHours: {
     thu: {
       open: 12,
@@ -87,6 +90,39 @@ restaurant.orderDelivery({
   starterIndex: 1
 })
 
+// spread operator ...
+const arr = [7, 8, 9];
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+console.log(...newArr);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocci']
+console.log(newMenu);
+
+// copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+
+//join two arrays
+const menuu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(menuu);
+
+// 
+const str = 'Jonas';
+const letters = [...str, ' ', 'S.'];
+console.log(letters);
+
+// example
+const ingrideients = [prompt('Let\'s make past! ingridient 1?'),
+prompt('Let\'s make past! ingridient 2?'),
+prompt('Let\'s make past! ingridient 3?')]
+
+restaurant.orderPasta(...ingrideients);
+
+// objects
+const newRestaurant = { ...restaurant, foundIn: '2003', founder: 'Your father' }
+
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'New name';
 /////////////////////////////
 // Destructuring Arrays
 
