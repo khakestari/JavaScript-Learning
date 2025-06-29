@@ -38,6 +38,10 @@ const restaurant = {
   orderPasta: function (ing1, ing2, ing3) {
     console.log(`here is delicious pasta with ${ing1}, ${ing2} and ${ing3}`);
   },
+  orderPizza: function (mainIngredients, ...otherIngredients) {
+    console.log(mainIngredients);
+    console.log(otherIngredients);
+  },
   openingHours: {
     thu: {
       open: 12,
@@ -66,12 +70,12 @@ const { menu = [], starterMenu: starter = [] } = restaurant;;
 
 console.log(menu, starter);
 // mutating
-let a = 111;
-let b = 999;
-const obj = { a: 23, b: 7, c: 14 };
+// let a = 111;
+// let b = 999;
+// const obj = { a: 23, b: 7, c: 14 };
 
-({ a, b } = obj);
-console.log(a, b);
+// ({ a, b } = obj);
+// console.log(a, b);
 
 // nested objects
 
@@ -112,17 +116,53 @@ const letters = [...str, ' ', 'S.'];
 console.log(letters);
 
 // example
-const ingrideients = [prompt('Let\'s make past! ingridient 1?'),
-prompt('Let\'s make past! ingridient 2?'),
-prompt('Let\'s make past! ingridient 3?')]
+// const ingrideients = [prompt('Let\'s make past! ingridient 1?'),
+// prompt('Let\'s make past! ingridient 2?'),
+// prompt('Let\'s make past! ingridient 3?')]
 
-restaurant.orderPasta(...ingrideients);
+// restaurant.orderPasta(...ingrideients);
 
 // objects
 const newRestaurant = { ...restaurant, foundIn: '2003', founder: 'Your father' }
 
 const restaurantCopy = { ...restaurant };
 restaurantCopy.name = 'New name';
+
+// 1) destructuring
+// rest pattern
+// Spread, because on Right side of =
+const arr2 = [1, 2, ...[3, 4]];
+
+// Rest, because on left side of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+const [pizza, , rissoto, ...otherfood] = [...restaurant.mainMenu, ...restaurant.starterMenu];
+console.log(pizza, rissoto, otherfood);
+
+//objects 
+const { sat, ...weekDays } = restaurant.openingHours;
+console.log(sat, weekDays);
+
+// 2) functions
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++)
+    sum += numbers[i]
+
+  console.log(...numbers);
+  console.log(sum);
+};
+add(2, 3);
+add(5, 3, 7, 2);
+add(8, 2, 5, 3, 2, 1, 4);
+
+const x = [23, 5, 7];
+add(...x);
+
+//example 
+restaurant.orderPizza('Mushrooms', 'onion', 'olives')
+console.log(165);
 /////////////////////////////
 // Destructuring Arrays
 
