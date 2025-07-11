@@ -190,11 +190,43 @@ const restaurant = {
 
 // nulish
 restaurant.numGuests = 0;
-const guests = restaurant.numGuests || 10;
-console.log(guests);
-// nulish: null and undefined (Not 0 or '')
-const guestsCorrect = restaurant.numGuests ?? 10;
-console.log(guestsCorrect);
+// const guests = restaurant.numGuests || 10;
+// console.log(guests);
+// // nulish: null and undefined (Not 0 or '')
+// const guestsCorrect = restaurant.numGuests ?? 10;
+// console.log(guestsCorrect);
+
+// logical assignment Operators
+
+const rest1 = {
+  name: 'Capri',
+  // numGuests: 20
+  numGuests: 0
+}
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi'
+}
+
+// rest1.numGuests = rest1.numGuests || 10;
+// rest2.numGuests = rest2.numGuests || 10;
+// OR Assignment
+// rest1.numGuests ||= 10
+// rest2.numGuests ||= 10
+
+rest1.numGuests ??= 10
+rest2.numGuests ??= 10
+
+
+// AND assignment
+
+// rest1.owner = rest1.owner && '<ANONYMOUS>';
+// rest2.owner = rest2.owner && '<ANONYMOUS>';
+
+rest1.owner &&= 10;
+rest2.owner &&= 10;
+console.log(rest1);
+console.log(rest2);
 
 /////////////////////////////
 // Destructuring Arrays
@@ -230,3 +262,58 @@ console.log(guestsCorrect);
 // const [p = 1, q = 1, r = 1] = [8, 9];
 // console.log(p, q, r);
 
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+const [players1, players2] = game['players'];
+const [gk, ...fieldPlayers] = players1[0]
+const allPlayers = [...players1, ...players2];
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic']
+const { odds: { team1, x: draw, team2 } } = game;
+const printGoals = function (...players) {
+  console.log(`${players.length} goals were scored`);
+}
+
+printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+printGoals('Davies', 'Muller');
+
+team1 < team2 && console.log('team 1 is more likly to win');
+team1 > team2 && console.log('team 2 is more likly to win');
