@@ -23,41 +23,64 @@ const mexicanFoods = new Set([
 ]);
 
 // Data needed for first part of the section
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  order: function (starterIndex, mainIndex) {
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
-  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time = '20:10', address }) {
+  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:10', address }) {
     console.log(`Order recieved! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
   },
-  orderPasta: function (ing1, ing2, ing3) {
+  orderPasta(ing1, ing2, ing3) {
     console.log(`here is delicious pasta with ${ing1}, ${ing2} and ${ing3}`);
   },
-  orderPizza: function (mainIngredients, ...otherIngredients) {
+  orderPizza(mainIngredients, ...otherIngredients) {
     console.log(mainIngredients);
     console.log(otherIngredients);
   },
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  openingHours,
 };
 
+// console.log(restaurant.openingHours?.mon?.open);
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  // console.log(open);
+}
+
+// methods
+// console.log(restaurant.ordertest?.(0, 1) ?? 'there isn\'t');
+
+// loop over object keys
+
+// for (const day of Object.keys(openingHours)) {
+//   console.log(day);
+// }
+// for (const day of Object.values(openingHours)) {
+//   console.log(day);
+// }
+// for (const [key, { open, close }] of Object.entries(openingHours)) {
+//   console.log(key, open, close);
+// }
 /////////////////////////////
 // Destructuring Objects
 
@@ -225,8 +248,19 @@ rest2.numGuests ??= 10
 
 rest1.owner &&= 10;
 rest2.owner &&= 10;
-console.log(rest1);
-console.log(rest2);
+// console.log(rest1);
+// console.log(rest2);
+
+// looping arrays
+
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+// for (const item of menu) console.log(item);
+// for (const [i, el] of menu.entries()) console.log(`${i + 1} ${el}`);
+
+/// object literals
+
+///
 
 /////////////////////////////
 // Destructuring Arrays
@@ -312,8 +346,29 @@ const printGoals = function (...players) {
   console.log(`${players.length} goals were scored`);
 }
 
-printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
-printGoals('Davies', 'Muller');
+// printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+// printGoals('Davies', 'Muller');
 
-team1 < team2 && console.log('team 1 is more likly to win');
-team1 > team2 && console.log('team 2 is more likly to win');
+// team1 < team2 && console.log('team 1 is more likly to win');
+// team1 > team2 && console.log('team 2 is more likly to win');
+
+// challenge #2
+
+for (const [num, player] of game.scored.entries())
+  console.log(`Goal ${num + 1}: ${player}`);
+
+let avgOdds = 0;
+for (const odd of Object.values(game.odds)) {
+  avgOdds += odd;
+}
+console.log(avgOdds / 3);
+
+const oddsObj = Object.entries(game.odds);
+console.log(oddsObj);
+for (const [team, odd] of oddsObj) {
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  console.log(`Odd of ${teamStr} ${odd}`);
+  // let teamName = odd[0] === 'team1' ?
+  // console.log(`${oddsObj[odd[0]]}`);
+  // console.log(`odd ${Object.values(game.odds[`${odd}`] ?? 'team1'])}`);
+}
