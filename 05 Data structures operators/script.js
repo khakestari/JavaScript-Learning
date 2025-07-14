@@ -354,21 +354,106 @@ const printGoals = function (...players) {
 
 // challenge #2
 
-for (const [num, player] of game.scored.entries())
-  console.log(`Goal ${num + 1}: ${player}`);
+// for (const [num, player] of game.scored.entries())
+// console.log(`Goal ${num + 1}: ${player}`);
 
 let avgOdds = 0;
 for (const odd of Object.values(game.odds)) {
   avgOdds += odd;
 }
-console.log(avgOdds / 3);
+// console.log(avgOdds / 3);
 
 const oddsObj = Object.entries(game.odds);
-console.log(oddsObj);
+// console.log(oddsObj);
 for (const [team, odd] of oddsObj) {
   const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
-  console.log(`Odd of ${teamStr} ${odd}`);
+  // console.log(`Odd of ${teamStr} ${odd}`);
   // let teamName = odd[0] === 'team1' ?
   // console.log(`${oddsObj[odd[0]]}`);
   // console.log(`odd ${Object.values(game.odds[`${odd}`] ?? 'team1'])}`);
+}
+
+const ordersSet = new Set(['pasta', 'pizza', 'pizza', 'rissotto', 'pasta', 'pizza']);
+
+// console.log(ordersSet.size);
+// console.log(ordersSet.has('pizza'));
+// console.log(ordersSet.has('bread'));
+ordersSet.add('Garlic bread');
+ordersSet.add('Garlic bread');
+ordersSet.delete('pizza');
+// ordersSet.clear();
+// console.log(ordersSet);
+
+for (const order of ordersSet) console.log(order);
+// example
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter']
+
+const staffunique = [...new Set(staff)];
+// console.log(staffunique);
+// console.log(new Set(staff).size);
+
+const commonfoods = italianFoods.intersection(mexicanFoods);
+// console.log([...commonfoods]);
+
+const italianMexicanFusion = italianFoods.union(mexicanFoods);
+// console.log(italianMexicanFusion);
+
+const diffElements = italianFoods.difference(mexicanFoods);
+// console.log(diffElements);
+
+const uniqueitalianandmexican = italianFoods.symmetricDifference(mexicanFoods);
+// console.log(uniqueitalianandmexican);
+
+// console.log(italianFoods.isDisjointFrom(mexicanFoods));
+
+const rest = new Map();
+rest.set('name', 'classico Italiano');
+rest.set(1, 'Firenze, italy');
+rest.set(2, 'Lisbon, Portugal');
+
+rest.set('categories', ['italian', 'pizzeria']).set('open', 11).set(true, 'we are open');
+// console.log(rest);
+// console.log(rest.get(true));
+
+
+const question = new Map([
+  ['question', 'what is best lang?'],
+  [1, 'c'],
+  [2, 'java'],
+  [3, 'JS'],
+  ['correct Ans', 3],
+  [true, 'Correct'],
+  [false, 'try again!'],
+]);
+
+// console.log(question);
+
+for (const [key, value] of question) {
+  if (typeof (key) === 'number')
+    console.log(value);
+}
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+let events = [...new Set(gameEvents.values())]
+console.log(events);
+
+gameEvents.delete('64');
+
+console.log(90 / gameEvents.size);
+
+for (const [key, value] of gameEvents) {
+  console.log(key <= 45 ? `[First Half] ${key}: ${value}` : `[Second Half] ${key}: ${value}`);
 }
