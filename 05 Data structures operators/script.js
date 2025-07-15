@@ -448,12 +448,39 @@ const gameEvents = new Map([
 ]);
 
 let events = [...new Set(gameEvents.values())]
-console.log(events);
+// console.log(events);
 
 gameEvents.delete('64');
 
-console.log(90 / gameEvents.size);
+// console.log(90 / gameEvents.size);
 
-for (const [key, value] of gameEvents) {
-  console.log(key <= 45 ? `[First Half] ${key}: ${value}` : `[Second Half] ${key}: ${value}`);
+// for (const [key, value] of gameEvents) {
+//   console.log(key <= 45 ? `[First Half] ${key}: ${value}` : `[Second Half] ${key}: ${value}`);
+// }
+
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+    const output = `${first}${second.replace(second[0], second[0].toUpperCase())}`
+    console.log(`${output.padEnd(20)} ${'✅'.repeat(i + 1)}`);
+  }
+});
+
+const flightRows = flights.split('+');
+
+const getCode = str => str.slice(0, 3).toUpperCase();
+
+for (const flights of flightRows) {
+  const [type, from, to, time] = flights.split(';');
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll('_', ' ')} ${getCode(from)} ${getCode(to)} (${time.replace(':', 'h')})`.padStart(36);
+  console.log(output);
 }
+
