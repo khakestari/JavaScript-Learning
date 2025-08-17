@@ -83,6 +83,15 @@ const calcDisplayBalance = function (movements) {
 };
 calcDisplayBalance(account1.movements)
 
+const calcDisplaySummery = function (movements) {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, cur) => acc + cur, 0);
+  labelSumIn.textContent = `${incomes}€`;
+  const outcomes = movements.filter(mov => mov < 0).reduce((acc, cur) => acc + cur, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+  const interest = movements.filter(mov => mov > 0).map(deposit => deposit * 1.2 / 100).filter(int => int >= 1).reduce((acc, inter) => acc + inter, 0);
+  labelSumInterest.textContent = `${interest}€`
+}
+calcDisplaySummery(account1.movements);
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner.toLowerCase().split(' ').map(word => word[0]).join('');
@@ -164,10 +173,19 @@ const deposits = movements.filter(function (mov) {
 const withdrawls = movements.filter(mov => mov < 0);
 
 const balance = movements.reduce((acc, cur,) => acc + cur, 0);
-console.log(balance);
+// console.log(balance);
 
 //maximum value
 
 const max = movements.reduce((acc, cur) => cur > acc ? cur : acc, movements[0]);
-console.log(max);
+// console.log(max);
 
+const totalUSDollar =
+  movements.filter(mov => mov > 0).
+    map(mov => mov * 1.1).
+    // map((mov, i, arr) => {
+    //   console.log(arr);
+    //   return mov * 1.1
+    // }).
+    reduce((acc, cur) => acc + cur, 0);
+// console.log(totalUSDollar);
