@@ -287,3 +287,4 @@ const overalBalance = accounts.map(acc => acc.movements).flat().reduce((acc, cur
 // flatmap
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, curr) => acc + curr, 0)
 
+const owners = ['j', 'z', 'a', 'm']
