@@ -36,6 +36,14 @@ const breeds = [
     },
 ];
 
+const dogs = [
+    { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+    { weight: 8, curFood: 200, owners: ['Matilda'] },
+    { weight: 13, curFood: 275, owners: ['Sarah', 'John', 'Leo'] },
+    { weight: 18, curFood: 244, owners: ['Joe'] },
+    { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
 // ch #1
 const checkDogs = function (julia, kate) {
 
@@ -85,3 +93,59 @@ console.log(breeds.some(breed => breed.activities.length >= 3));
 const fetchBreeds = breeds.filter(breed => breed.activities.includes('fetch')).map(breed => breed.averageWeight);
 const heaviest = Math.max(...fetchBreeds)
 console.log(heaviest);
+
+// ch #5
+
+// #1
+dogs.forEach(dog => {
+    const recFood = Math.floor(dog.weight ** 0.75 * 28);
+    dog['recFood'] = recFood;
+})
+console.log(dogs);
+
+// #2
+const dogSarah = dogs.find(dog => dog.owners.includes('Sarah'))
+console.log(Number(dogSarah.curFood) > Number(dogSarah.recFood) ? 'too much' : 'too little')
+
+// #3
+const ownersTooMuch = dogs.filter(dog => dog.curFood > dog.recFood).flatMap(dog => dog.owners);
+const ownersTooLittle = dogs.filter(dog => dog.curFood < dog.recFood).flatMap(dog => dog.owners);
+console.log(ownersTooMuch);
+console.log(ownersTooLittle);
+
+// #4
+console.log(`${ownersTooMuch.join(' and ')}'s dogs are eating too much`);
+console.log(`${ownersTooLittle.join(' and ')}'s dogs are eating too little`);
+
+// #5
+console.log(dogs.some(dog => dog.curFood === dog.recFood));
+
+// #6
+const checkEatingOkay = dog => dog.curFood < dog.recFood * 1.1 && dog.curFood > dog.recFood * 0.9;
+console.log(dogs.every(checkEatingOkay));
+
+// #7
+const dogsEatingOkay = dogs.filter(checkEatingOkay)
+console.log(dogsEatingOkay);
+
+// #8
+const dogGroupbyFood = Object.groupBy(dogs, dog => {
+    const cf = dog.curFood;
+    const rf = dog.recFood;
+    if (cf > rf) {
+        return 'too-much'
+    }
+    if (rf > cf) {
+        return 'too-little'
+    }
+    return 'exact'
+});
+console.log(dogGroupbyFood);
+
+// #9
+const dogGroupbyOwner = Object.groupBy(dogs, dog => dog.owners.length);
+console.log(dogGroupbyOwner);
+
+// #10
+const sortedDogs = dogs.toSorted((dog1, dog2) => Number(dog1.recFood) - Number(dog2.recFood))
+console.log(sortedDogs);

@@ -10,6 +10,7 @@ const account1 = {
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+  type: 'premium',
 };
 
 const account2 = {
@@ -17,6 +18,7 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+  type: 'standard',
 };
 
 const account3 = {
@@ -24,6 +26,7 @@ const account3 = {
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
+  type: 'premium',
 };
 
 const account4 = {
@@ -31,6 +34,7 @@ const account4 = {
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
+  type: 'basic',
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -61,9 +65,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal'
     const html = `
     <div class="movements__row">
@@ -157,6 +164,13 @@ btnClose.addEventListener('click', function (event) {
   }
   inputCloseUsername.value = '';
   inputClosePin.value = '';
+})
+
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted)
+  sorted = !sorted;
 })
 
 /////////////////////////////////////////////////
@@ -288,3 +302,87 @@ const overalBalance = accounts.map(acc => acc.movements).flat().reduce((acc, cur
 const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, curr) => acc + curr, 0)
 
 const owners = ['j', 'z', 'a', 'm']
+// console.log(owners.sort()); // mutat original
+
+// console.log(movements);
+// console.log(movements.sort()); // convert everything in string and sort 
+
+// return <0, A, B
+// return >0 B, A
+// console.log(movements.sort((a, b) => a - b)); // ascending
+
+// console.log(movements);
+const groupedMovements = Object.groupBy(movements, movement => movement > 0 ? 'deposits' : 'withrawls')
+// console.log(groupedMovements);
+
+const numMov = Object.groupBy(accounts, account => {
+  const movmentCount = account.movements.length;
+  if (movmentCount >= 8)
+    return 'very active'
+  if (movmentCount >= 4)
+    return 'active'
+  if (movmentCount >= 1)
+    return 'moderate'
+  return 'inActive'
+
+})
+
+// console.log(numMov);
+
+const groupedByType = Object.groupBy(accounts, account => account.type)
+// console.log(groupedByType);
+
+const x = new Array(7);
+// x.fill(1);
+x.fill(1, 3, 5)
+// console.log(x);
+
+const y = Array.from({ length: 7 }, () => 1)
+// console.log(y);
+
+const z = Array.from({ length: 100 }, (_, i) => Math.trunc(Math.random() * 6 + 1))
+// console.log(z);
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsUI);
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+  console.log(movementsUI2);
+});
+
+// console.log(movements.slice().reverse());
+// console.log(movements.toReversed());
+// console.log(movements.toSorted());
+// console.log(movements.toSpliced());
+// movements[1] = 2000;
+const newMovments = movements.with(1, 2000)
+// console.log(newMovments);
+// console.log(movements);
+
+
+// practice
+const bankDepositSum = accounts.flatMap(account => account.movements).filter(mov => mov > 0).reduce((acc, cur) => acc + cur, 0)
+// console.log(bankDepositSum);
+
+// const numDeposits1000 = accounts.flatMap(account => account.movements).filter(mov => mov >= 1000).length;
+const numDeposits1000 = accounts.flatMap(account => account.movements).reduce((count, cur) => cur >= 1000 ? ++count : count, 0)
+// console.log(numDeposits1000);
+
+const sums = accounts.flatMap(acc => acc.movements).reduce((sums, cur) => {
+  // cur > 0 ? (sums.deposits += cur) : (sums.withdrawls += cur);
+  sums[cur > 0 ? 'deposits' : 'withdrawls'] += cur;
+  return sums;
+}, { deposits: 0, withdrawls: 0 });
+// console.log(sums);
+
+const convertTitleCase = function (title) {
+  const capitalize = (word) => word[0].toUpperCase() + word.slice(1);
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const titleCase = title.toLowerCase().split(' ').map(word => exceptions.includes(word) ? word : capitalize(word)).join(' ');
+  return capitalize(titleCase);
+}
+
+// console.log(convertTitleCase('this is a nice title'));
+
